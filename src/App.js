@@ -46,24 +46,26 @@ const clarifaiSetUp = (imgUrl) => {
   return requestOptions;
 }
 
+const initialState = {
+  userInput: '',
+  imgUrl: '',
+  box: '',
+  route: 'signin',
+  isSignedIn: false,
+  isOnRegisterPage: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
+}
+
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      userInput: '',
-      imgUrl: '',
-      box: '',
-      route: 'signin',
-      isSignedIn: false,
-      isOnRegisterPage: false,
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: ''
-      }
-    }
+    this.state = initialState;
   }
 
   loadUser = (data) => {
@@ -123,14 +125,14 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if (route === 'signin') {
-      this.setState({isSignedIn: false});
-      this.setState({isOnRegisterPage: false});
+      this.setState(initialState);
+      this.setState(initialState);
     } else if (route === 'register') {
       this.setState({isOnRegisterPage: true});
-      this.setState({isSignedIn: false})
+      this.setState({isSignedIn: false});
     } else if (route === 'home') {
-      this.setState({isSignedIn: true})
-      this.setState({isOnRegisterPage: false})
+      this.setState({isSignedIn: true});
+      this.setState({isOnRegisterPage: false});
     }
     this.setState({route});
   }
