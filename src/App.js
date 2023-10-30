@@ -49,6 +49,7 @@ const clarifaiSetUp = (imgUrl) => {
 const initialState = {
   userInput: '',
   imgUrl: '',
+  celebName: '',
   box: '',
   route: 'signin',
   isSignedIn: false,
@@ -91,8 +92,17 @@ class App extends Component {
     }
   }
 
+  identifyCelebName = (data) => {
+    const celebName = data.outputs[0].data.regions[0].data.concepts[0].name;
+    return celebName;
+  }
+
   displayFaceBox = (box) => {
     this.setState({box});
+  }
+
+  displayCelebName = (celebName) => {
+    this.setState({celebName});
   }
 
   onUserInputChange = (e) => {
@@ -101,10 +111,11 @@ class App extends Component {
 
   onPictureSubmit = (e) => {
     this.setState({imgUrl: this.state.userInput});
-    fetch("https://api.clarifai.com/v2/models/face-detection/outputs", clarifaiSetUp(this.state.userInput))
+    fetch("https://api.clarifai.com/v2/models/celebrity-face-detection/outputs", clarifaiSetUp(this.state.userInput))
     .then(response => response.json())
     .then(response => {
       this.displayFaceBox(this.calculateFaceLocation(response));
+      this.displayCelebName(this.identifyCelebName(response));
       if (response) {
         fetch('http://localhost:3000/image', {
           method: 'put',
@@ -139,7 +150,7 @@ class App extends Component {
   
 
   render () {
-    const { isOnRegisterPage, isSignedIn, route, box, imgUrl, user } = this.state;
+    const { isOnRegisterPage, isSignedIn, route, box, imgUrl, user, celebName } = this.state;
     return (
       <div className="App">
         <ParticlesBg type="cobweb" bg={true} />
@@ -151,7 +162,7 @@ class App extends Component {
           ? <div>
               <Rank name={user.name} entries={user.entries} />
               <ImageLinkForm onUserInputChange={this.onUserInputChange} onButtonClick={this.onPictureSubmit} />
-              <FaceRecognition imgUrl={imgUrl} box={box} />
+              <FaceRecognition imgUrl={imgUrl} box={box} celebName={celebName} />
             </div>
           : ( 
             route === 'signin'
