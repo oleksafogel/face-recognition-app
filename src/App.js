@@ -12,40 +12,6 @@ import FaceRecognition from './components/FaceRecognition/FaceRecogniton';
 import SignIn from './components/Signin/SignIn';
 import Register from './components/Register/Register';
 
-const clarifaiSetUp = (imgUrl) => {
-  const PAT = 'c168ca4bd8ac46b0a11775fa41cfbf94';
-  const USER_ID = 'ofogel';       
-  const APP_ID = 'wonder-star-app';
-  const IMAGE_URL = imgUrl;
-
-  const raw = JSON.stringify({
-      "user_app_id": {
-          "user_id": USER_ID,
-          "app_id": APP_ID
-      },
-      "inputs": [
-          {
-              "data": {
-                  "image": {
-                      "url": IMAGE_URL
-                  }
-              }
-          }
-      ]
-  });
-
-  const requestOptions = {
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Key ' + PAT
-      },
-      body: raw
-  };
-
-  return requestOptions;
-}
-
 const initialState = {
   userInput: '',
   imgUrl: '',
@@ -111,7 +77,13 @@ class App extends Component {
 
   onPictureSubmit = (e) => {
     this.setState({imgUrl: this.state.userInput});
-    fetch("https://api.clarifai.com/v2/models/celebrity-face-detection/outputs", clarifaiSetUp(this.state.userInput))
+    fetch('http://localhost:3000/imageurl', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+          input: this.state.userInput
+      })
+    })
     .then(response => response.json())
     .then(response => {
       this.displayFaceBox(this.calculateFaceLocation(response));
