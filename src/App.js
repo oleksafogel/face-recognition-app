@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './App.css';
 
-import ParticlesBg from 'particles-bg';
+import MouseParticles from 'react-mouse-particles'
 
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
@@ -15,7 +15,7 @@ import Register from './components/Register/Register';
 const clarifaiSetUp = (imgUrl) => {
   const PAT = 'c168ca4bd8ac46b0a11775fa41cfbf94';
   const USER_ID = 'ofogel';       
-  const APP_ID = 'face-recognition-app';
+  const APP_ID = 'wonder-star-app';
   const IMAGE_URL = imgUrl;
 
   const raw = JSON.stringify({
@@ -153,7 +153,7 @@ class App extends Component {
     const { isOnRegisterPage, isSignedIn, route, box, imgUrl, user, celebName } = this.state;
     return (
       <div className="App">
-        <ParticlesBg type="cobweb" bg={true} />
+        <MouseParticles g={1} color="random" radius={20} />
         <div style={{display: 'flex', justifyContent: 'space-between', margin: '20px', alignItems: 'center'}}>
           <Logo />
           <Navigation isOnRegisterPage={isOnRegisterPage} isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
