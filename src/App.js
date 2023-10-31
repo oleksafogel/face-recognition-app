@@ -125,7 +125,7 @@ class App extends Component {
     const { isOnRegisterPage, isSignedIn, route, box, imgUrl, user, celebName } = this.state;
     return (
       <div className="App">
-        <MouseParticles g={1} color="random" radius={20} />
+        <MouseParticles g={1} color="random" radius={10} />
         <div style={{display: 'flex', justifyContent: 'space-between', margin: '20px', alignItems: 'center'}}>
           <Logo />
           <Navigation isOnRegisterPage={isOnRegisterPage} isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
