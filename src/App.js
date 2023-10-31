@@ -77,7 +77,7 @@ class App extends Component {
 
   onPictureSubmit = (e) => {
     this.setState({imgUrl: this.state.userInput});
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://wonder-star-app-backend.onrender.com/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -89,7 +89,7 @@ class App extends Component {
       this.displayFaceBox(this.calculateFaceLocation(response));
       this.displayCelebName(this.identifyCelebName(response));
       if (response) {
-        fetch('http://localhost:3000/image', {
+        fetch('https://wonder-star-app-backend.onrender.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
